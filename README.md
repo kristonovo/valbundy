@@ -1,7 +1,7 @@
 # Valbundy
 Instant jquery validation
 
-## Usage
+## Download
 Requires jquery
 ### For production
 Download **bin/valbundy.min.js** and include it after jquery like so
@@ -32,6 +32,9 @@ Add data-rules attribute to inputfields. Sepparate multiple rules with `|`
 - phone
 - min @todo min:2
 
+***
+
+### For development
 To add your own rule just add a method to **Validation.js**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "notfalse" value.
 ```
 v.customrule = function()
