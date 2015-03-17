@@ -20,7 +20,7 @@ $().ready(function() {
 });
 ```
 
-Add data-rules Attribute to inputfields. Sepparate multiple rules with `|`
+Add data-rules attribute to inputfields. Sepparate multiple rules with `|`
 ```
 <input name="email" type="email" data-rules="required|email">
 ```

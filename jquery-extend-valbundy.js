@@ -26,6 +26,10 @@ jQuery.fn.extend({
                     if(value in validation)
                     {
                         validation[value]();
+                        if(!validation.pass)
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
