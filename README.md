@@ -31,6 +31,10 @@ Add data-rules attribute to inputfields. Sepparate multiple rules with `|`
 - email
 - phone
 - min @todo min:2
+- city
+  - default regex for german cities
+- zip
+  - default regex for german postcodes
 
 ***
 

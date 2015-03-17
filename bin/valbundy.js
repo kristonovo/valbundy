@@ -36,7 +36,21 @@ Valbundy.Validation = function() {
     {
         var re = /^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}$/;
         v.pass = re.exec(v.value);
-    }
+    };
+
+    // german cities
+    v.city = function()
+    {
+        var re = /^([a-zA-Z-äöüÄÖÜß/\(\)]+\s){0,100}[a-zA-Z-äöüÄÖÜß/\(\)]{2,100}$/;
+        v.pass = re.exec(v.value);
+    };
+
+    // german zip
+    v.zip = function()
+    {
+        var re = /^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$/;
+        v.pass = re.exec(v.value);
+    };
 
 };
 /**
@@ -62,9 +76,9 @@ Valbundy.DOM = function() {
     d.displayCheck = function(selector)
     {
         var next_element = $(selector).next().attr('class');
-        if(next_element !== 'check')
+        if(next_element !== 'check float-left')
         {
-            $(selector).after('<img class="check" src="/img/check.png" alt="check">');
+            $(selector).after('<img class="check float-left" src="/img/check.png" alt="check">');
         }
         return d;
     };
@@ -78,9 +92,9 @@ Valbundy.DOM = function() {
     d.displayCross = function(selector)
     {
         var next_element = $(selector).next().attr('class');
-        if(next_element !== 'cross')
+        if(next_element !== 'cross float-left')
         {
-            $(selector).after('<img class="cross" src="/img/cross.png" alt="cross">');
+            $(selector).after('<img class="cross float-left" src="/img/cross.png" alt="cross">');
         }
         return d;
     };

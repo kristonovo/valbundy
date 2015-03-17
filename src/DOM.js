@@ -21,9 +21,9 @@ Valbundy.DOM = function() {
     d.displayCheck = function(selector)
     {
         var next_element = $(selector).next().attr('class');
-        if(next_element !== 'check')
+        if(next_element !== 'check float-left')
         {
-            $(selector).after('<img class="check" src="/img/check.png" alt="check">');
+            $(selector).after('<img class="check float-left" src="/img/check.png" alt="check">');
         }
         return d;
     };
@@ -37,9 +37,9 @@ Valbundy.DOM = function() {
     d.displayCross = function(selector)
     {
         var next_element = $(selector).next().attr('class');
-        if(next_element !== 'cross')
+        if(next_element !== 'cross float-left')
         {
-            $(selector).after('<img class="cross" src="/img/cross.png" alt="cross">');
+            $(selector).after('<img class="cross float-left" src="/img/cross.png" alt="cross">');
         }
         return d;
     };
