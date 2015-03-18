@@ -11,17 +11,17 @@ Download **bin/valbundy.min.js** and include it after jquery
 ```
 
 ## Usage
-Add `.valbundy()` to any form you wish
+1. Add `.valbundy()` to any form you wish
 ```javascript
 $().ready(function() {
     $("#my-form").valbundy();
 });
 ```
 
-### Feedback-Images
+2. ### Feedback-Images
 Place the two png-images from **img/** folder in your public root. They have to be accessible via e.g. **`yourdomain.com/img/valbundy-success.png`**.
 
-### HTML-Markup
+3. ### HTML-Markup
 Add data-rules attribute to input-fields. Separate multiple rules with `|`. **Important:** input-fields need an id-attribute which is equal to their name-attribute.
 ```html
 <input id="email" name="email" type="email" data-rules="required|email">
