@@ -48,7 +48,7 @@ Fields without the data-rules-attribute will automatically be treated as validat
 ***
 
 ## More Advanced
-Download **bin/valbundy.js**. To add your own rule just add a method to **Valbundy.Validation**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "not-false" value.
+Download **bin/valbundy.js**. To define your own rule just add a method to **Valbundy.Validation**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "not-false" value.
 ```javascript
 v.customrule = function()
 {
