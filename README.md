@@ -11,7 +11,7 @@ Download **bin/valbundy.min.js** and include it after jquery
 ```
 
 ## Usage
-1. ### jquery 
+1. ### jquery
 Add `.valbundy()` to any form you wish
 ```javascript
 $().ready(function() {
