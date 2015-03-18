@@ -60,6 +60,22 @@ Valbundy.Fields = function(selector) {
             }
         }
         return count;
-    }
+    };
+
+    f.status = function(dom)
+    {
+        /**
+         * Check if all fields are validated.
+         * If so we enable the submit-button.
+         */
+        if(f.countValidatedFields() == f.fieldcount)
+        {
+            dom.enableSubmit();
+        }
+        else
+        {
+            dom.disableSubmit();
+        }
+    };
 
 };

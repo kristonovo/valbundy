@@ -82,6 +82,7 @@ Valbundy.Validation = function() {
     };
 
 };
+
 /**
  * Created by Kristo on 17.03.2015.
  */
@@ -144,9 +145,26 @@ Valbundy.Fields = function(selector) {
             }
         }
         return count;
-    }
+    };
+
+    f.status = function(dom)
+    {
+        /**
+         * Check if all fields are validated.
+         * If so we enable the submit-button.
+         */
+        if(f.countValidatedFields() == f.fieldcount)
+        {
+            dom.enableSubmit();
+        }
+        else
+        {
+            dom.disableSubmit();
+        }
+    };
 
 };
+
 /**
  * Created by Kristo on 17.03.2015.
  */
@@ -216,6 +234,7 @@ Valbundy.DOM = function(selector) {
         return d;
     };
 };
+
 /**
  * Created by Kristo on 16.03.2015.
  */
@@ -239,22 +258,13 @@ jQuery.fn.extend({
             form.submit();
         });
 
-        var Status = function()
-        {
-            /**
-             * Check if all fields are validated.
-             * If so we enable the submit-button.
-             */
-            if(fields.countValidatedFields() == fields.fieldcount)
-            {
-                dom.enableSubmit();
-            }
-            else
-            {
-                dom.disableSubmit();
-            }
-        };
+        //fields.status(dom);
 
+        /**
+         * Init: Validate input-fields
+         * Check if server-flag "data-error" is set to 1
+         * If so: Delete those fields from ValidatedFields-Object
+         */
         $.each(inputs, function(key, obj)
         {
             var input = $(this);
@@ -268,42 +278,11 @@ jQuery.fn.extend({
             }
             if(parseInt(input.attr('data-error')))
             {
-                dom.
+                dom.addClass(input, 'error').showErrorImage(input);
+                fields.deleteValidatedField(input);
             }
+            fields.status(dom);
         });
-
-        /**
-         * Check if html-page is loaded and input-fields are already filled:
-         * This proofs if html-page is sent back from Server because Server-Side-Validation fails
-         */
-        if(fields.fieldcount == fields.filledFields)
-        {
-            $.each(inputs, function(key, obj)
-            {
-                var input = $(this);
-                var server_error = parseInt(input.attr('data-error'));
-                if(!server_error)
-                {
-                    if(validation.validate(input))
-                    {
-                        dom.removeClass(input, 'error').showSuccessImage(input);
-                        fields.addValidatedField(input);
-                    }
-                    else
-                    {
-                        dom.addClass(input, 'error').showErrorImage(input);
-                        fields.deleteValidatedField(input);
-                    }
-                }
-                else
-                {
-                    dom.addClass(input, 'error').showErrorImage(input);
-                    fields.deleteValidatedField(input);
-                }
-
-                Status();
-            });
-        }
 
         inputs.on('propertychange change click keyup input paste', function() {
 
@@ -323,7 +302,7 @@ jQuery.fn.extend({
                 fields.deleteValidatedField(input);
             }
 
-            Status();
+            fields.status(dom);
 
         });
 
