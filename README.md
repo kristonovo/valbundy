@@ -4,10 +4,8 @@ Instant form validation (requires jquery)
 ## Download
 Download **bin/valbundy.min.js** and include it after jquery
 ```html
-...
 <script src="jquery.min.js"></script>
 <script src="valbundy.min.js"></script>
-...
 ```
 
 ## Usage
