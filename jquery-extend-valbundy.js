@@ -47,7 +47,7 @@ jQuery.fn.extend({
             fields.status(dom);
         });
 
-        inputs.on('propertychange change click keyup input paste', function() {
+        inputs.on('propertychange change click keyup paste', function() {
 
             var input = $(this);
 
