@@ -31,8 +31,6 @@ Place the two png-images from **img/** folder in your public root. They have to 
   ```html
   <input id="email" name="email" type="email" data-rules="required|email" data-error="1">
   ```
-  
-4. ### Done
 
 ### Validation rules
 - required
