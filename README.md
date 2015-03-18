@@ -19,7 +19,7 @@ $().ready(function() {
 ```
 
 ### Feedback-Images
-Place two png-images in your public root called `valbundy-success.png` and `valbundy-error.png`. They have to be accessible via e.g. `yourdomain.com/img/valbundy-success.png`.
+Place the two png-images from **img/** folder in your public root. They have to be accessible via e.g. **`yourdomain.com/img/valbundy-success.png`**.
 
 ### HTML-Markup
 Add data-rules attribute to input-fields. Separate multiple rules with `|`. **Important:** input-fields need an id-attribute which is equal to their name-attribute.
@@ -46,7 +46,7 @@ Fields without the data-rules-attribute will automatically be treated as validat
 
 ***
 
-### Advanced
+## More Advanced
 Download **bin/valbundy.js**. To add your own rule just add a method to **Valbundy.Validation**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "not-false" value.
 ```javascript
 v.customrule = function()
