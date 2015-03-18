@@ -12,12 +12,12 @@ Download **bin/valbundy.min.js** and include it after jquery
 
 ## Usage
 1. ### jquery
-Add `.valbundy()` to any form you wish
-```javascript
-$().ready(function() {
-    $("#my-form").valbundy();
-});
-```
+  Add `.valbundy()` to any form you wish
+  ```javascript
+  $().ready(function() {
+      $("#my-form").valbundy();
+  });
+  ```
 
 2. ### Feedback-Images
 Place the two png-images from **img/** folder in your public root. They have to be accessible via e.g. `http://yourdomain.com/img/valbundy-success.png`
