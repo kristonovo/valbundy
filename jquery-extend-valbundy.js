@@ -15,6 +15,11 @@ jQuery.fn.extend({
 
         fields.setFields().countFields().countFilledFields();
         dom.disableSubmit();
+        dom.submit.on('click', function()
+        {
+            dom.disableSubmit(); // @todo not just disabling: also loading-feedback
+            form.submit();
+        });
 
         var Status = function()
         {
