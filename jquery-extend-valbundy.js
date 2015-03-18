@@ -37,6 +37,23 @@ jQuery.fn.extend({
             }
         };
 
+        $.each(inputs, function(key, obj)
+        {
+            var input = $(this);
+            if(validation.validate(input))
+            {
+                fields.addValidatedField(input);
+            }
+            else
+            {
+                fields.deleteValidatedField(input);
+            }
+            if(parseInt(input.attr('data-error')))
+            {
+                dom.
+            }
+        });
+
         /**
          * Check if html-page is loaded and input-fields are already filled:
          * This proofs if html-page is sent back from Server because Server-Side-Validation fails

@@ -46,7 +46,7 @@ Valbundy.Validation = function() {
 
     v.alpha = function()
     {
-        var re = /^[a-zA-ZäöüÄÖÜàáâçéèêëîïôûùüÿñæœß]+$/;
+        var re = /^[a-zA-ZäöüÄÖÜàáâçéèêëîïôûùüÿñæœß]*$/;
         v.pass = re.exec(v.value);
     };
 
@@ -57,27 +57,27 @@ Valbundy.Validation = function() {
 
     v.phone = function()
     {
-        var re = /^(\+){0,2}[0-9 ]{8,20}$/;
+        var re = /^((\+){0,2}[0-9 ]{8,20})*$/;
         v.pass = re.exec(v.value);
     };
 
     v.email = function()
     {
-        var re = /^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}$/;
+        var re = /^[-0-9a-zA-Z.+_]{1,60}@[-0-9a-zA-Z.+_]{1,60}\.[a-zA-Z]{2,4}$/;
         v.pass = re.exec(v.value);
     };
 
     // german cities
     v.city = function()
     {
-        var re = /^([a-zA-Z-äöüÄÖÜß/\(\)]+\s){0,100}[a-zA-Z-äöüÄÖÜß/\(\)]{2,100}$/;
+        var re = /^(([a-zA-Z-äöüÄÖÜß/\(\)]+\s){0,100}[a-zA-Z-äöüÄÖÜß/\(\)]{2,100})*$/;
         v.pass = re.exec(v.value);
     };
 
     // german zip
     v.zip = function()
     {
-        var re = /^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$/;
+        var re = /^(([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3})*$/;
         v.pass = re.exec(v.value);
     };
 

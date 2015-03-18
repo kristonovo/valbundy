@@ -46,6 +46,20 @@ Fields without the data-rules-attribute will automatically be treated as validat
 ***
 
 ## More Advanced
+
+### CSS
+Fields which are failing validation get the error class attached
+```html
+<input class="error" id="email" name="email" type="email" data-rules="required|email" data-error="1">
+```
+Customise your CSS to fit your needs. E.g.
+```css
+input.error {
+  border: 1px solid red;
+}
+```
+The class will automatically removed when the given field passes validation.
+
 Download **bin/valbundy.js**. To define your own rule just add a method to **Valbundy.Validation**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "not-false" value.
 ```javascript
 v.customrule = function()
