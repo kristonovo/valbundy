@@ -2,52 +2,68 @@
  * Created by Kristo on 17.03.2015.
  */
 
-Valbundy.DOM = function() {
+Valbundy.DOM = function(selector) {
 
     var d = this;
+    d.submit = $(selector + ' :submit');
+    d.successImage = '<img class="valbundy-success" src="/img/valbundy-success.png" alt="check">';
+    d.errorImage = '<img class="valbundy-error" src="/img/valbundy-error.png" alt="x">';
+
+    d.disableSubmit = function()
+    {
+        d.submit.prop('disabled', true).addClass('disabled');
+        return d;
+    };
+
+    d.enableSubmit = function()
+    {
+        d.submit.prop('disabled', false).removeClass('disabled');
+        return d;
+    };
 
     d.addClass = function(selector, c)
     {
-        $(selector).addClass(c);
+        selector.addClass(c);
         return d;
     };
 
     d.removeClass = function(selector, c)
     {
-        $(selector).removeClass(c);
+        selector.removeClass(c);
         return d;
     };
 
-    d.displayCheck = function(selector)
+    d.showSuccessImage = function(selector)
     {
-        var next_element = $(selector).next().attr('class');
-        if(next_element !== 'check float-left')
+        var next = selector.next().attr('class');
+        if(next !== 'valbundy-success')
         {
-            $(selector).after('<img class="check float-left" src="/img/check.png" alt="check">');
+            selector.after(d.successImage);
+
         }
         return d;
     };
 
-    d.removeCheck = function(ancestor)
+    d.hideSuccessImage = function(selector)
     {
-        $(ancestor).next('.check').remove();
+        selector.next('.valbundy-success').remove();
         return d;
     };
 
-    d.displayCross = function(selector)
+    d.showErrorImage = function(selector)
     {
-        var next_element = $(selector).next().attr('class');
-        if(next_element !== 'cross float-left')
+        var next = selector.next().attr('class');
+        if(next !== 'valbundy-error')
         {
-            $(selector).after('<img class="cross float-left" src="/img/cross.png" alt="cross">');
+            selector.after(d.errorImage);
+
         }
         return d;
     };
 
-    d.removeCross = function(ancestor)
+    d.hideErrorImage = function(selector)
     {
-        $(ancestor).next('.cross').remove();
-        $(ancestor).next().next('.cross').remove();
+        selector.next('.valbundy-error').remove();
         return d;
     };
 };

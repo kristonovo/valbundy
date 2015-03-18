@@ -1,10 +1,8 @@
 # Valbundy
-Instant jquery validation
+Instant form validation (requires jquery)
 
 ## Download
-Requires jquery
-### For production
-Download **bin/valbundy.min.js** and include it after jquery like so
+Download **bin/valbundy.min.js** and include it after jquery
 ```
 ...
 <script src="jquery.min.js"></script>
@@ -12,17 +10,25 @@ Download **bin/valbundy.min.js** and include it after jquery like so
 ...
 ```
 
-### Usage
+## Usage
 Add `.valbundy()` to any form you wish
 ```
 $().ready(function() {
-    $(".form").valbundy();
+    $("#my-form").valbundy();
 });
 ```
 
-Add data-rules attribute to inputfields. Sepparate multiple rules with `|`
+### Feedback-Images
+Place two png-images in your public root called `valbundy-success.png` and `valbundy-error.png`. They have to be accessible via e.g. `yourdomain.com/img/valbundy-success.png`.
+
+### HTML-Markup
+Add data-rules attribute to input-fields. Separate multiple rules with `|`. **Important:** input-fields need an id-attribute which is equal to their name-attribute.
 ```
-<input name="email" type="email" data-rules="required|email">
+<input id="email" name="email" type="email" data-rules="required|email">
+```
+If you like to interact with server-side validation (recommended) use `data-error` to let valbundy know that the given field failed while server-validation.
+```
+<input id="email" name="email" type="email" data-rules="required|email" data-error="1">
 ```
 
 ### Validation rules
@@ -36,13 +42,19 @@ Add data-rules attribute to inputfields. Sepparate multiple rules with `|`
 - zip
   - default regex for german postcodes
 
+Fields without the data-rules-attribute will automatically be treated as validated.
+
 ***
 
 ### For development
-To add your own rule just add a method to **Validation.js**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "notfalse" value.
+To add your own rule just add a method to **Validation.js**. The method should set `v.pass` to false if validation fails. If validation pass its value should be true or any "not-false" value.
 ```
 v.customrule = function()
 {
     v.pass = v.value.length;
 }
+```
+After that you can use the validation-rule in html
+```
+<input id="first-name" name="first-name" type="text" data-rules="alpha|customrule">
 ```

@@ -2,52 +2,88 @@
  * Created by Kristo on 16.03.2015.
  */
 
-var validation = new Valbundy.Validation();
-var dom = new Valbundy.DOM();
-
 jQuery.fn.extend({
     valbundy: function() {
 
-        var selector = $(this).selector;
-        var submit = $(selector + ' :submit');
-        submit.prop('disabled', true).addClass('disabled');
+        var form = $(this);
+        var selector = form.selector;
+        var inputs = $(selector + ' :input[data-rules]');
 
-        $(selector + ' :input').on('propertychange change click keyup input paste', function() {
+        var validation = new Valbundy.Validation();
+        var dom = new Valbundy.DOM(selector);
+        var fields = new Valbundy.Fields(selector);
 
-            var rules_str = $(this).attr('data-rules');
-            var rules = [];
+        fields.setFields().countFields().countFilledFields();
+        dom.disableSubmit();
 
-            if(typeof rules_str !== 'undefined' && rules_str.length >= 1)
+        var Status = function()
+        {
+            /**
+             * Check if all fields are validated.
+             * If so we enable the submit-button.
+             */
+            if(fields.countValidatedFields() == fields.fieldcount)
             {
-                rules = rules_str.split("|");
-                validation.value = $.trim($(this).val());
+                dom.enableSubmit();
+            }
+            else
+            {
+                dom.disableSubmit();
+            }
+        };
 
-                $.each(rules, function( key, value ) {
-                    if(value in validation)
+        /**
+         * Check if html-page is loaded and input-fields are already filled:
+         * This proofs if html-page is sent back from Server because Server-Side-Validation fails
+         */
+        if(fields.fieldcount == fields.filledFields)
+        {
+            $.each(inputs, function(key, obj)
+            {
+                var input = $(this);
+                var server_error = parseInt(input.attr('data-error'));
+                if(!server_error)
+                {
+                    if(validation.validate(input))
                     {
-                        validation[value]();
-                        if(!validation.pass)
-                        {
-                            return false;
-                        }
+                        dom.removeClass(input, 'error').showSuccessImage(input);
+                        fields.addValidatedField(input);
                     }
                     else
                     {
-                        console.log('Validation rule does not exist.')
+                        dom.addClass(input, 'error').showErrorImage(input);
+                        fields.deleteValidatedField(input);
                     }
-                });
-
-                if(!validation.pass)
-                {
-                    dom.addClass($(this), 'error').removeCheck($(this)).displayCross($(this));
-                    submit.prop('disabled', true).addClass('disabled');
                 }
                 else
                 {
-                    dom.removeClass($(this), 'error').displayCheck($(this)).removeCross($(this));
-                    submit.prop('disabled', false).removeClass('disabled');
+                    dom.addClass(input, 'error').showErrorImage(input);
+                    fields.deleteValidatedField(input);
                 }
+
+                Status();
+            });
+        }
+
+        inputs.on('propertychange change click keyup input paste', function() {
+
+            var input = $(this);
+
+            /**
+             * Check if validation for input passes
+             */
+            if(validation.validate(input))
+            {
+                dom.removeClass(input, 'error').hideErrorImage(input).showSuccessImage(input);
+                fields.addValidatedField(input);
             }
+            else
+            {
+                dom.addClass(input, 'error').hideSuccessImage(input).showErrorImage(input);
+                fields.deleteValidatedField(input);
+            }
+
+            Status();
 
         });
 

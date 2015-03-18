@@ -10,6 +10,35 @@ Valbundy.Validation = function() {
     v.value = '';
     v.pass = true;
 
+    v.validate = function(target)
+    {
+        var rules_str = target.attr('data-rules') || target.parent().attr('data-rules');
+        var rules = [];
+
+        if(typeof rules_str !== 'undefined' && rules_str.length >= 1)
+        {
+            rules = rules_str.split("|");
+            v.value = $.trim(target.val());
+
+            $.each(rules, function( key, method )
+            {
+                if (method in v)
+                {
+                    v[method]();
+                    if (!v.pass)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    console.log('Validation rule does not exist.')
+                }
+            });
+        }
+        return v.pass;
+    };
+
     v.required = function()
     {
         v.pass = v.value.length;
