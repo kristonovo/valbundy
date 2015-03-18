@@ -1,5 +1,5 @@
 # Valbundy
-Instant form validation (requires jquery)
+Instant form validation (requires jQuery)
 
 ## Download
 Download **bin/valbundy.min.js** and include it after jquery
@@ -9,7 +9,7 @@ Download **bin/valbundy.min.js** and include it after jquery
 ```
 
 ## Usage
-1. ### jquery
+1. ### jQuery
   Add `.valbundy()` to any form you wish
   ```javascript
   $().ready(function() {
