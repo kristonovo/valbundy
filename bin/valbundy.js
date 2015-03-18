@@ -90,14 +90,14 @@ Valbundy.Validation = function() {
 Valbundy.Fields = function(form) {
 
     var f = this;
-    f.form = $(form);
+    f.form = form;
     f.fields = {};
     f.fieldcount = 0;
     f.validatedFields = {};
 
     f.setFields = function()
     {
-        f.fields = $(form.selector + ' :input[data-rules]');
+        f.fields = $(f.form.selector + ' :input[data-rules]');
         return f;
     };
 
