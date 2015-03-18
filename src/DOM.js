@@ -2,10 +2,10 @@
  * Created by Kristo on 17.03.2015.
  */
 
-Valbundy.DOM = function(selector) {
+Valbundy.DOM = function(form) {
 
     var d = this;
-    d.submit = $(selector + ' :submit');
+    d.submit = $(form.selector + ' :submit');
     d.successImage = '<img class="valbundy-success" src="/img/valbundy-success.png" alt="check">';
     d.errorImage = '<img class="valbundy-error" src="/img/valbundy-error.png" alt="x">';
 
@@ -21,49 +21,49 @@ Valbundy.DOM = function(selector) {
         return d;
     };
 
-    d.addClass = function(selector, c)
+    d.addClass = function(target, c)
     {
-        selector.addClass(c);
+        target.addClass(c);
         return d;
     };
 
-    d.removeClass = function(selector, c)
+    d.removeClass = function(target, c)
     {
-        selector.removeClass(c);
+        target.removeClass(c);
         return d;
     };
 
-    d.showSuccessImage = function(selector)
+    d.showSuccessImage = function(target)
     {
-        var next = selector.next().attr('class');
+        var next = target.next().attr('class');
         if(next !== 'valbundy-success')
         {
-            selector.after(d.successImage);
+            target.after(d.successImage);
 
         }
         return d;
     };
 
-    d.hideSuccessImage = function(selector)
+    d.hideSuccessImage = function(target)
     {
-        selector.next('.valbundy-success').remove();
+        target.next('.valbundy-success').remove();
         return d;
     };
 
-    d.showErrorImage = function(selector)
+    d.showErrorImage = function(target)
     {
-        var next = selector.next().attr('class');
+        var next = target.next().attr('class');
         if(next !== 'valbundy-error')
         {
-            selector.after(d.errorImage);
+            target.after(d.errorImage);
 
         }
         return d;
     };
 
-    d.hideErrorImage = function(selector)
+    d.hideErrorImage = function(target)
     {
-        selector.next('.valbundy-error').remove();
+        target.next('.valbundy-error').remove();
         return d;
     };
 };

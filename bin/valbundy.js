@@ -12,12 +12,12 @@ Valbundy.Validation = function() {
 
     v.validate = function(target)
     {
-        var rules_str = target.attr('data-rules') || target.parent().attr('data-rules');
+        var data_rules = target.attr('data-rules') || target.parent().attr('data-rules');
         var rules = [];
 
-        if(typeof rules_str !== 'undefined' && rules_str.length >= 1)
+        if(typeof data_rules !== 'undefined' && data_rules.length >= 1)
         {
-            rules = rules_str.split("|");
+            rules = data_rules.split("|");
             v.value = $.trim(target.val());
 
             $.each(rules, function( key, method )
@@ -87,36 +87,23 @@ Valbundy.Validation = function() {
  * Created by Kristo on 17.03.2015.
  */
 
-Valbundy.Fields = function(selector) {
+Valbundy.Fields = function(form) {
 
     var f = this;
-    f.form = $(selector);
+    f.form = $(form);
     f.fields = {};
     f.fieldcount = 0;
     f.validatedFields = {};
-    f.filledFields = 0;
 
     f.setFields = function()
     {
-        f.fields = $(selector + ' :input[data-rules]').serializeArray();
+        f.fields = $(form.selector + ' :input[data-rules]');
         return f;
     };
 
     f.countFields = function()
     {
         f.fieldcount = f.fields.length;
-        return f;
-    };
-
-    f.countFilledFields = function()
-    {
-        $.each(f.fields, function(key, obj)
-        {
-            if(obj['value'] != '')
-            {
-                f.filledFields++;
-            }
-        });
         return f;
     };
 
@@ -169,10 +156,10 @@ Valbundy.Fields = function(selector) {
  * Created by Kristo on 17.03.2015.
  */
 
-Valbundy.DOM = function(selector) {
+Valbundy.DOM = function(form) {
 
     var d = this;
-    d.submit = $(selector + ' :submit');
+    d.submit = $(form.selector + ' :submit');
     d.successImage = '<img class="valbundy-success" src="/img/valbundy-success.png" alt="check">';
     d.errorImage = '<img class="valbundy-error" src="/img/valbundy-error.png" alt="x">';
 
@@ -188,49 +175,49 @@ Valbundy.DOM = function(selector) {
         return d;
     };
 
-    d.addClass = function(selector, c)
+    d.addClass = function(target, c)
     {
-        selector.addClass(c);
+        target.addClass(c);
         return d;
     };
 
-    d.removeClass = function(selector, c)
+    d.removeClass = function(target, c)
     {
-        selector.removeClass(c);
+        target.removeClass(c);
         return d;
     };
 
-    d.showSuccessImage = function(selector)
+    d.showSuccessImage = function(target)
     {
-        var next = selector.next().attr('class');
+        var next = target.next().attr('class');
         if(next !== 'valbundy-success')
         {
-            selector.after(d.successImage);
+            target.after(d.successImage);
 
         }
         return d;
     };
 
-    d.hideSuccessImage = function(selector)
+    d.hideSuccessImage = function(target)
     {
-        selector.next('.valbundy-success').remove();
+        target.next('.valbundy-success').remove();
         return d;
     };
 
-    d.showErrorImage = function(selector)
+    d.showErrorImage = function(target)
     {
-        var next = selector.next().attr('class');
+        var next = target.next().attr('class');
         if(next !== 'valbundy-error')
         {
-            selector.after(d.errorImage);
+            target.after(d.errorImage);
 
         }
         return d;
     };
 
-    d.hideErrorImage = function(selector)
+    d.hideErrorImage = function(target)
     {
-        selector.next('.valbundy-error').remove();
+        target.next('.valbundy-error').remove();
         return d;
     };
 };
@@ -243,63 +230,71 @@ jQuery.fn.extend({
     valbundy: function() {
 
         var form = $(this);
-        var selector = form.selector;
-        var inputs = $(selector + ' :input[data-rules]');
 
         var validation = new Valbundy.Validation();
-        var dom = new Valbundy.DOM(selector);
-        var fields = new Valbundy.Fields(selector);
+        var dom =        new Valbundy.DOM(form);
+        var fields =     new Valbundy.Fields(form);
 
-        fields.setFields().countFields().countFilledFields();
-        dom.disableSubmit();
+        fields.setFields().countFields();
+
+        /**
+         * Disable submit button
+         * if at least 1 field exists with
+         * data-rules attribute
+         */
+        if(fields.fieldcount)
+        {
+            dom.disableSubmit();
+        }
+
         dom.submit.on('click', function()
         {
             dom.disableSubmit(); // @todo not just disabling: also loading-feedback
             form.submit();
         });
 
-        //fields.status(dom);
-
         /**
          * Init: Validate input-fields
          * Check if server-flag "data-error" is set to 1
          * If so: Delete those fields from ValidatedFields-Object
          */
-        $.each(inputs, function(key, obj)
+        $.each(fields.fields, function(key, obj)
         {
-            var input = $(this);
-            if(validation.validate(input))
+            var field = $(this);
+            if(validation.validate(field))
             {
-                fields.addValidatedField(input);
+                fields.addValidatedField(field);
             }
             else
             {
-                fields.deleteValidatedField(input);
+                fields.deleteValidatedField(field);
             }
-            if(parseInt(input.attr('data-error')))
+            if(parseInt(field.attr('data-error')))
             {
-                dom.addClass(input, 'error').showErrorImage(input);
-                fields.deleteValidatedField(input);
+                dom.addClass(field, 'error').showErrorImage(field);
+                fields.deleteValidatedField(field);
             }
+
             fields.status(dom);
+
         });
 
-        inputs.on('propertychange change click keyup paste', function() {
+        fields.fields.on('propertychange change click keyup paste', function() {
 
-            var input = $(this);
+            var field = $(this);
 
             /**
              * Check if validation for input passes
              */
-            if(validation.validate(input))
+            if(validation.validate(field))
             {
-                dom.removeClass(input, 'error').hideErrorImage(input).showSuccessImage(input);
-                fields.addValidatedField(input);
+                dom.removeClass(field, 'error').hideErrorImage(field).showSuccessImage(field);
+                fields.addValidatedField(field);
             }
             else
             {
-                dom.addClass(input, 'error').hideSuccessImage(input).showErrorImage(input);
-                fields.deleteValidatedField(input);
+                dom.addClass(field, 'error').hideSuccessImage(field).showErrorImage(field);
+                fields.deleteValidatedField(field);
             }
 
             fields.status(dom);

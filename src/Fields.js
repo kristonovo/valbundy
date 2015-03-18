@@ -2,36 +2,23 @@
  * Created by Kristo on 17.03.2015.
  */
 
-Valbundy.Fields = function(selector) {
+Valbundy.Fields = function(form) {
 
     var f = this;
-    f.form = $(selector);
+    f.form = $(form);
     f.fields = {};
     f.fieldcount = 0;
     f.validatedFields = {};
-    f.filledFields = 0;
 
     f.setFields = function()
     {
-        f.fields = $(selector + ' :input[data-rules]').serializeArray();
+        f.fields = $(form.selector + ' :input[data-rules]');
         return f;
     };
 
     f.countFields = function()
     {
         f.fieldcount = f.fields.length;
-        return f;
-    };
-
-    f.countFilledFields = function()
-    {
-        $.each(f.fields, function(key, obj)
-        {
-            if(obj['value'] != '')
-            {
-                f.filledFields++;
-            }
-        });
         return f;
     };
 

@@ -12,12 +12,12 @@ Valbundy.Validation = function() {
 
     v.validate = function(target)
     {
-        var rules_str = target.attr('data-rules') || target.parent().attr('data-rules');
+        var data_rules = target.attr('data-rules') || target.parent().attr('data-rules');
         var rules = [];
 
-        if(typeof rules_str !== 'undefined' && rules_str.length >= 1)
+        if(typeof data_rules !== 'undefined' && data_rules.length >= 1)
         {
-            rules = rules_str.split("|");
+            rules = data_rules.split("|");
             v.value = $.trim(target.val());
 
             $.each(rules, function( key, method )

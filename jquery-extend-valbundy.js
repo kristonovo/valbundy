@@ -6,63 +6,71 @@ jQuery.fn.extend({
     valbundy: function() {
 
         var form = $(this);
-        var selector = form.selector;
-        var inputs = $(selector + ' :input[data-rules]');
 
         var validation = new Valbundy.Validation();
-        var dom = new Valbundy.DOM(selector);
-        var fields = new Valbundy.Fields(selector);
+        var dom =        new Valbundy.DOM(form);
+        var fields =     new Valbundy.Fields(form);
 
-        fields.setFields().countFields().countFilledFields();
-        dom.disableSubmit();
+        fields.setFields().countFields();
+
+        /**
+         * Disable submit button
+         * if at least 1 field exists with
+         * data-rules attribute
+         */
+        if(fields.fieldcount)
+        {
+            dom.disableSubmit();
+        }
+
         dom.submit.on('click', function()
         {
             dom.disableSubmit(); // @todo not just disabling: also loading-feedback
             form.submit();
         });
 
-        //fields.status(dom);
-
         /**
          * Init: Validate input-fields
          * Check if server-flag "data-error" is set to 1
          * If so: Delete those fields from ValidatedFields-Object
          */
-        $.each(inputs, function(key, obj)
+        $.each(fields.fields, function(key, obj)
         {
-            var input = $(this);
-            if(validation.validate(input))
+            var field = $(this);
+            if(validation.validate(field))
             {
-                fields.addValidatedField(input);
+                fields.addValidatedField(field);
             }
             else
             {
-                fields.deleteValidatedField(input);
+                fields.deleteValidatedField(field);
             }
-            if(parseInt(input.attr('data-error')))
+            if(parseInt(field.attr('data-error')))
             {
-                dom.addClass(input, 'error').showErrorImage(input);
-                fields.deleteValidatedField(input);
+                dom.addClass(field, 'error').showErrorImage(field);
+                fields.deleteValidatedField(field);
             }
+
             fields.status(dom);
+
         });
 
-        inputs.on('propertychange change click keyup paste', function() {
+        fields.fields.on('propertychange change click keyup paste', function() {
 
-            var input = $(this);
+            var field = $(this);
 
             /**
              * Check if validation for input passes
              */
-            if(validation.validate(input))
+            if(validation.validate(field))
             {
-                dom.removeClass(input, 'error').hideErrorImage(input).showSuccessImage(input);
-                fields.addValidatedField(input);
+                dom.removeClass(field, 'error').hideErrorImage(field).showSuccessImage(field);
+                fields.addValidatedField(field);
             }
             else
             {
-                dom.addClass(input, 'error').hideSuccessImage(input).showErrorImage(input);
-                fields.deleteValidatedField(input);
+                dom.addClass(field, 'error').hideSuccessImage(field).showErrorImage(field);
+                fields.deleteValidatedField(field);
             }
 
             fields.status(dom);
