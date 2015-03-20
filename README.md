@@ -21,13 +21,13 @@ Download **bin/valbundy.min.js** and include it after jquery
 Place the two png-images from **img/** folder in your public root. They have to be accessible via e.g. `http://yourdomain.com/img/valbundy-success.png`
 
 3. ### HTML-Markup
-  Add data-rules attribute to input-fields. Separate multiple rules with `|`. **Important:** input-fields need an id-attribute which is equal to their name-attribute.
+  Add data-rules attribute to input-fields. Separate multiple rules with `|`. Don´t forget to markup your input with an unique name-attribute.
   ```html
-  <input id="email" name="email" type="email" data-rules="required|email">
+  <input name="email" type="email" data-rules="required|email">
   ```
   If you like to interact with server-side validation (recommended) use `data-error` to let valbundy know that the given field failed while server-validation.
   ```html
-  <input id="email" name="email" type="email" data-rules="required|email" data-error="1">
+  <input name="email" type="email" data-rules="required|email" data-error="1">
   ```
 
 ### Validation rules
@@ -50,7 +50,7 @@ Fields without the data-rules-attribute will automatically be treated as validat
 ### CSS
 Fields which are failing validation get the error class attached
 ```html
-<input class="error" id="email" name="email" type="email" data-rules="required|email" data-error="1">
+<input class="error" name="email" type="email" data-rules="required|email" data-error="1">
 ```
 Customise your CSS to fit your needs. E.g.
 ```css
@@ -70,5 +70,5 @@ v.customrule = function()
 ```
 After that you can use the validation-rule in html
 ```html
-<input id="first-name" name="first-name" type="text" data-rules="alpha|customrule">
+<input name="first-name" type="text" data-rules="alpha|customrule">
 ```

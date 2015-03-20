@@ -63,7 +63,7 @@ Valbundy.Validation = function() {
 
     v.email = function()
     {
-        var re = /^[-0-9a-zA-Z.+_]{1,60}@[-0-9a-zA-Z.+_]{1,60}\.[a-zA-Z]{2,4}$/;
+        var re = /^([-0-9a-zA-Z.+_]{1,60}@[-0-9a-zA-Z.+_]{1,60}\.[a-zA-Z]{2,4})*$/;
         v.pass = re.exec(v.value);
     };
 

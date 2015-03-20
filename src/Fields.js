@@ -24,13 +24,13 @@ Valbundy.Fields = function(form) {
 
     f.addValidatedField = function(field)
     {
-        f.validatedFields[$(field).attr('id')] = 'validated';
+        f.validatedFields[field.attr('name')] = 'validated';
         return f;
     };
 
     f.deleteValidatedField = function(field)
     {
-        delete f.validatedFields[$(field).attr('id')];
+        delete f.validatedFields[field.attr('name')];
         return f;
     };
 
