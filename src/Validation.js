@@ -81,4 +81,18 @@ Valbundy.Validation = function() {
         v.pass = re.exec(v.value);
     };
 
+    // e. g. 2x1
+    v.xy = function()
+    {
+        var re = /^([2-6]x1)*$/;
+        v.pass = re.exec(v.value);
+    };
+
+    // german text
+    v.text = function()
+    {
+        var re = /^([a-zA-Z0-9, !?."%&:;äöüÄÖÜß\-\+])*$/;
+        v.pass = re.exec(v.value);
+    };
+
 };
