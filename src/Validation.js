@@ -67,6 +67,12 @@ Valbundy.Validation = function() {
         v.pass = re.exec(v.value);
     };
 
+    v.int = function()
+    {
+        var re = /^([0-9])*$/;
+        v.pass = re.exec(v.value);
+    };
+
     // german cities
     v.city = function()
     {
