@@ -39,10 +39,12 @@ Place the two png-images from **img/** folder in your public root. They have to 
 - min @todo min:2
 - text
   - regex for german text
-- city
-  - default regex for german cities
+- street
+  - regex for german streets
 - zip
-  - default regex for german postcodes
+  - regex for german postcodes
+- city
+  - regex for german cities
 
 Fields without the data-rules-attribute will automatically be treated as validated.
 

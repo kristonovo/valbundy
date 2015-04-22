@@ -101,4 +101,11 @@ Valbundy.Validation = function() {
         v.pass = re.exec(v.value);
     };
 
+    // german street
+    v.street = function()
+    {
+        var re = /^[A-Za-z 0-9-.,&äöüÄÖÜß]*$/;
+        v.pass = re.exec(v.value);
+    };
+
 };
