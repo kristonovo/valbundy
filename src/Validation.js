@@ -73,6 +73,12 @@ Valbundy.Validation = function() {
         v.pass = re.exec(v.value);
     };
 
+    v.alphanumeric = function()
+    {
+        var re = /^([a-zA-Z0-9 ])*$/;
+        v.pass = re.exec(v.value);
+    };
+
     // german cities
     v.city = function()
     {
@@ -104,7 +110,7 @@ Valbundy.Validation = function() {
     // german street
     v.street = function()
     {
-        var re = /^[A-Za-z 0-9-.,&äöüÄÖÜß]*$/;
+        var re = /^([A-Za-z 0-9-.,&äöüÄÖÜß]{2,100})*$/;
         v.pass = re.exec(v.value);
     };
 

@@ -36,6 +36,7 @@ Place the two png-images from **img/** folder in your public root. They have to 
 - email
 - phone
 - int
+- alphanumeric
 - min @todo min:2
 - text
   - regex for german text
