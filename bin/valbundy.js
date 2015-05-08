@@ -57,7 +57,7 @@ Valbundy.Validation = function() {
 
     v.phone = function()
     {
-        var re = /^((\+){0,2}[0-9 ]{8,20})*$/;
+        var re = /^((\+){0,2}[0-9 \-\/]{8,20})*$/;
         v.pass = re.exec(v.value);
     };
 
