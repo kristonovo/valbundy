@@ -103,7 +103,7 @@ Valbundy.Validation = function() {
     // german text
     v.text = function()
     {
-        var re = /^([a-zA-Z0-9, !?."%&:;äöüÄÖÜß\-\+\r\n])*$/;
+        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß\-\+\r\n])*$/;
         v.pass = re.exec(v.value);
     };
 
@@ -315,18 +315,19 @@ jQuery.fn.extend({
         fields.fields.on('propertychange change click keyup paste', function() {
 
             var field = $(this);
+            var label = $(this).prev().prev();
 
             /**
              * Check if validation for input passes
              */
             if(validation.validate(field))
             {
-                dom.removeClass(field, 'error').hideErrorImage(field).showSuccessImage(field);
+                dom.removeClass(field, 'error').hideErrorImage(field).showSuccessImage(label);
                 fields.addValidatedField(field);
             }
             else
             {
-                dom.addClass(field, 'error').hideSuccessImage(field).showErrorImage(field);
+                dom.addClass(field, 'error').hideSuccessImage(field).showErrorImage(label);
                 fields.deleteValidatedField(field);
             }
 
@@ -336,3 +337,5 @@ jQuery.fn.extend({
 
     }
 });
+
+//# sourceMappingURL=valbundy.js.map

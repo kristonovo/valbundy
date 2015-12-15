@@ -103,7 +103,7 @@ Valbundy.Validation = function() {
     // german text
     v.text = function()
     {
-        var re = /^([a-zA-Z0-9, !?."%&:;äöüÄÖÜß\-\+\r\n])*$/;
+        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß\-\+\r\n])*$/;
         v.pass = re.exec(v.value);
     };
 
