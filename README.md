@@ -40,6 +40,8 @@ Place the two png-images from **img/** folder in your public root. They have to 
 - min @todo min:2
 - text
   - regex for german text
+- line
+  - regex for german text without line break
 - street
   - regex for german streets
 - zip

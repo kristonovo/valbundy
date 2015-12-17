@@ -100,10 +100,17 @@ Valbundy.Validation = function() {
         v.pass = re.exec(v.value);
     };
 
-    // german text
+    // german text restricted to 1000 characters
     v.text = function()
     {
-        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß\-\+\r\n])*$/;
+        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß()$€=\-\+\r\n]){0,1000}$/;
+        v.pass = re.exec(v.value);
+    };
+
+    // german line restricted to 140 characters
+    v.line = function()
+    {
+        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß()$€=\-\+]){0,140}$/;
         v.pass = re.exec(v.value);
     };
 

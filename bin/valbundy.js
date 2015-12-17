@@ -100,10 +100,17 @@ Valbundy.Validation = function() {
         v.pass = re.exec(v.value);
     };
 
-    // german text
+    // german text restricted to 1000 characters
     v.text = function()
     {
-        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß\-\+\r\n])*$/;
+        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß()$€=\-\+\r\n]){0,1000}$/;
+        v.pass = re.exec(v.value);
+    };
+
+    // german line restricted to 140 characters
+    v.line = function()
+    {
+        var re = /^([a-zA-Z0-9, !?."%§&:;äöüÄÖÜß()$€=\-\+]){0,140}$/;
         v.pass = re.exec(v.value);
     };
 
@@ -315,19 +322,28 @@ jQuery.fn.extend({
         fields.fields.on('propertychange change click keyup paste', function() {
 
             var field = $(this);
-            var label = $(this).prev().prev();
+            var label = $('label[for="' + field.attr('id') + '"]');
 
             /**
-             * Check if validation for input passes
+             * Check if validation for input passes but only if content is given
              */
-            if(validation.validate(field))
+            if($.trim(field.val()).length >= 1)
             {
-                dom.removeClass(field, 'error').hideErrorImage(field).showSuccessImage(label);
-                fields.addValidatedField(field);
+                if(validation.validate(field))
+                {
+                    dom.removeClass(field, 'error').hideErrorImage(label).showSuccessImage(label);
+                    fields.addValidatedField(field);
+                }
+                else
+                {
+                    dom.addClass(field, 'error').hideSuccessImage(label).showErrorImage(label);
+                    fields.deleteValidatedField(field);
+                }
+
             }
             else
             {
-                dom.addClass(field, 'error').hideSuccessImage(field).showErrorImage(label);
+                dom.hideSuccessImage(label);
                 fields.deleteValidatedField(field);
             }
 

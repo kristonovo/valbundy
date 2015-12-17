@@ -58,19 +58,28 @@ jQuery.fn.extend({
         fields.fields.on('propertychange change click keyup paste', function() {
 
             var field = $(this);
-            var label = $(this).prev().prev(); // @todo Find better control to place the success/error Image customly
+            var label = $('label[for="' + field.attr('id') + '"]');
 
             /**
-             * Check if validation for input passes
+             * Check if validation for input passes but only if content is given
              */
-            if(validation.validate(field))
+            if($.trim(field.val()).length >= 1)
             {
-                dom.removeClass(field, 'error').hideErrorImage(field).showSuccessImage(label);
-                fields.addValidatedField(field);
+                if(validation.validate(field))
+                {
+                    dom.removeClass(field, 'error').hideErrorImage(label).showSuccessImage(label);
+                    fields.addValidatedField(field);
+                }
+                else
+                {
+                    dom.addClass(field, 'error').hideSuccessImage(label).showErrorImage(label);
+                    fields.deleteValidatedField(field);
+                }
+
             }
             else
             {
-                dom.addClass(field, 'error').hideSuccessImage(field).showErrorImage(label);
+                dom.hideSuccessImage(label);
                 fields.deleteValidatedField(field);
             }
 
